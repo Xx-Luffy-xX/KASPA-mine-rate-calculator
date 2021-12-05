@@ -1,1 +1,0 @@
-# KASPA-mine-rate-calculator
