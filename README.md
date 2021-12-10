@@ -6,7 +6,7 @@ Just place the file in the kaspa directory (where kaspactl is located) and run (
 
 Example: `./kas-rate-linux`.
 
-OPTIONAL: use "-s" flag to specify IP address of a public node.
+__OPTIONAL:__ use "-s" flag to specify IP address of a public node.
 
 Example: `./kas-rate-linux -s 10.0.0.38`
 
