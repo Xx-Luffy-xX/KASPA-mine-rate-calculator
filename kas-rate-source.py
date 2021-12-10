@@ -1,6 +1,7 @@
 import subprocess, locale, datetime
 import os
 from sys import exit
+import sys
 
 hour_to_sec = 3600;
 day_to_sec = hour_to_sec * 24;
@@ -12,18 +13,26 @@ if not os.path.isfile(KASPACTL):
     if not os.path.isfile(KASPACTL):
         print("kaspactl was not found, make sure you run the program from the same directory as kaspactl.")
         exit()
-    
-try:
-  subprocess.check_call(KASPACTL + " GetSelectedTipHash", shell=True)
-except subprocess.CalledProcessError:
-  print("\nNODE NOT FOUND!\nIf kaspad is running on other machine in the network please enter the machine's local IP:")
-  node_ip = input()
-  KASPACTL = KASPACTL + " -s " + node_ip
+
+if len(sys.argv)>1 and str(sys.argv[1])=="-s":
+    node_ip = str(sys.argv[2])
+    KASPACTL = KASPACTL + " -s " + node_ip
+else:
+    try:
+      subprocess.check_call(KASPACTL + " GetSelectedTipHash>/dev/null 2>&1", shell=True)
+    except subprocess.CalledProcessError:
+      print("\nNODE NOT FOUND!\nIf kaspad is running on other machine in the network please enter the machine's local IP:")
+      node_ip = input()
+      KASPACTL = KASPACTL + " -s " + node_ip
   
 output = subprocess.Popen(KASPACTL + " GetSelectedTipHash", stdout=subprocess.PIPE, shell=True).communicate()
 
-hash = str(output).split("selectedTipHash")[1].split('"')[2]
-
+try:
+    hash = str(output).split("selectedTipHash")[1].split('"')[2]
+except:
+    print("Couldn't connect to network...")
+    exit()
+    
 output = subprocess.Popen(KASPACTL + " EstimateNetworkHashesPerSecond 3000 " + hash, stdout=subprocess.PIPE, shell=True).communicate()
 global_hashrate = int(str(output).split('"')[5])
 print("\nNode found!\nGlobal hash rate is found to be:\t", locale.format_string("%.2f", global_hashrate/10**9, grouping=True), "GH/s")
