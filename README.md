@@ -2,11 +2,11 @@
 A calculator for mining rate of Kaspa currency.
 
 ## Instructions:
-Just place the file in the kaspa directory (where kaspactl is located) and run (preferably from terminal/cmd/powershell.
+Just place the file in the kaspa directory (where kaspactl is located) and run (preferably from terminal/cmd/powershell).
 
 Example: `./kas-rate-linux`.
 
-OPTIONAL: use "-s" flag to specify IP address of a public node.
+__OPTIONAL:__ use "-s" flag to specify IP address of a public node.
 
 Example: `./kas-rate-linux -s 10.0.0.38`
 
