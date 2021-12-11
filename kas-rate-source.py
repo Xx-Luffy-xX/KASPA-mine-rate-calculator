@@ -8,8 +8,10 @@ day_to_sec = hour_to_sec * 24;
 locale.setlocale(locale.LC_ALL, 'en_US')
 
 KASPACTL = str(os.path.join(os.getcwd(),"kaspactl"))
+win_flag = 0
 if not os.path.isfile(KASPACTL):
     KASPACTL = str(os.path.join(os.getcwd(),"kaspactl.exe"))
+    win_flag = 1
     if not os.path.isfile(KASPACTL):
         print("kaspactl was not found, make sure you run the program from the same directory as kaspactl.")
         exit()
@@ -19,7 +21,10 @@ if len(sys.argv)>1 and str(sys.argv[1])=="-s":
     KASPACTL = KASPACTL + " -s " + node_ip
 else:
     try:
-      subprocess.check_call(KASPACTL + " GetSelectedTipHash>/dev/null 2>&1", shell=True)
+        if win_flag==1:
+            subprocess.check_call(KASPACTL + " GetSelectedTipHash > $null", shell=True)
+        else:
+            subprocess.check_call(KASPACTL + " GetSelectedTipHash>/dev/null 2>&1", shell=True)
     except subprocess.CalledProcessError:
       print("\nNODE NOT FOUND!\nIf kaspad is running on other machine in the network please enter the machine's local IP:")
       node_ip = input()
