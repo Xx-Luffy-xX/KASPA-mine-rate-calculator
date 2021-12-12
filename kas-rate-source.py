@@ -13,7 +13,7 @@ if not os.path.isfile(KASPACTL):
     KASPACTL = str(os.path.join(os.getcwd(),"kaspactl.exe"))
     win_flag = 1
     if not os.path.isfile(KASPACTL):
-        print("kaspactl was not found, make sure you run the program from the same directory as kaspactl.")
+        input("\nkaspactl was not found, make sure you run the program from the same directory as kaspactl.\n\nPress enter to proceed...\n")
         exit()
 
 if len(sys.argv)>1 and str(sys.argv[1])=="-s":
